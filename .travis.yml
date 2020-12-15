@@ -8,4 +8,4 @@ install:
   - npm install
 script:
   - CI=false npm run build
-  - firebase deploy --only hosting --token ${TOKEN}
+  - firebase deploy --only hosting --token $TOKEN
