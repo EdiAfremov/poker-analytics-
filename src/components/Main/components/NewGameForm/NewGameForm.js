@@ -50,6 +50,7 @@ export const NewGameForm = () => {
               value={buyIn}
               onChange={(v) => setBuyIn(v)}
               name="buyIn"
+              type="number"
               InputLabelProps={{ shrink: true }}
               variant="outlined"
               inputProps={{ inputmode: "numeric", pattern: "[0-9]*" }}
@@ -59,6 +60,7 @@ export const NewGameForm = () => {
             <TextField
               label="Cashed out"
               fullWidth
+              type="number"
               value={cashOut}
               onChange={(v) => setCashOut(v)}
               name="cashedOut"
