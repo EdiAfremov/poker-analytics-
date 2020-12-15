@@ -48,7 +48,7 @@ export const NewGameForm = () => {
               label="Buy-in"
               fullWidth
               value={buyIn}
-              onChange={(v) => setBuyIn(v)}
+              onChange={(e) => setBuyIn(e.target.value)}
               name="buyIn"
               type="number"
               InputLabelProps={{ shrink: true }}
@@ -62,7 +62,7 @@ export const NewGameForm = () => {
               fullWidth
               type="number"
               value={cashOut}
-              onChange={(v) => setCashOut(v)}
+              onChange={(e) => setCashOut(e.target.value)}
               name="cashedOut"
               InputLabelProps={{ shrink: true }}
               variant="outlined"
