@@ -11,22 +11,6 @@ import Button from "@material-ui/core/Button";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import * as Styled from "./NewGameForm.style";
 
-function CustomInputNumber(props) {
-  const { inputRef, onChange, ...other } = props;
-
-  return (
-    <InputNumber
-      {...other}
-      getInputRef={inputRef}
-      step={50}
-      pattern="\d*"
-      onChange={(v) => {
-        onChange(v);
-      }}
-    />
-  );
-}
-
 export const NewGameForm = () => {
   const { isDrawerOpen, toggleDrawer } = useContext(GamesContext);
   const [date, setDate] = useState(moment().startOf("day"));
@@ -68,9 +52,7 @@ export const NewGameForm = () => {
               name="buyIn"
               InputLabelProps={{ shrink: true }}
               variant="outlined"
-              InputProps={{
-                inputComponent: CustomInputNumber,
-              }}
+              inputProps={{ inputmode: "numeric", pattern: "[0-9]*" }}
             />
           </Box>
           <Box mb={3}>
@@ -82,9 +64,7 @@ export const NewGameForm = () => {
               name="cashedOut"
               InputLabelProps={{ shrink: true }}
               variant="outlined"
-              InputProps={{
-                inputComponent: CustomInputNumber,
-              }}
+              inputProps={{ inputmode: "numeric", pattern: "[0-9]*" }}
             />
           </Box>
           <Box mb={3}>
