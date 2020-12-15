@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "poker-analytics-3ba9f"
+    "default": "poker-analytics-3ba9f",
+    "none": "poker-analytics-3ba9f"
   }
 }
