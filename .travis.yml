@@ -8,9 +8,4 @@ install:
   - npm install
 script:
   - CI=false npm run build
-deploy:
-  provider: firebase
-  skip_cleanup: true
-  token:
-    secure: "bXdS0IzgEinqhM/T9ym7ScT4qmp99WSXhGPCUS9EXc2NnPOBO6f03g3FHSPoGsDSpR1j4l79su9HRNFDG7Zb6nCnurCGynKwIpOGaBAlBAHu+9BPXFqQiSBeLwkG7npwS3HoQSfvVvV6u5ucagReaHvahcE18iXGbzhC0FfNyqZGknrxXWc7F1bA+6KPayDNdRji8CG3Tvr/GNKOmB1/2F2+Qe9/x+IYyH8Vh3f+/3RA5R4clf5w3TyeQhQJSBbSllUUTFbbAUZerPbSB/irgN7CGk5HSANVEZNAsTTSAdUMXKTzQko0VA366yHfqQvDKkEl34lxymcbYH7jwXipLT5sLYDlJzWMFokN5XhPhsIRYEXyF4BzTAfos5d2KaxaD9Q4j4kgcqybT5j9nxnbMQBntMicXRwcuemYzzzV5PYmHSwjybkCJDNXujKl3mWG6o6ZUMSksu5b5HyGGBOe5sMHmcAkadqdo2JjIrb+p0FlfVAdjh2tMNPGIhk6OHrpRJBXdyQ6utvhHT/tEIabHRjpMcmXMYIyFDlXIzqv9S6Jp5yL3JJ43pI6JtnmcniR01V5cLnwboHvuO/+hj7tCQ0qwtJk1dc1d822JohDFVkklkycmCYeteje+olyGEhRWnaaTne2+9Zb9Wfq6htkgXPkj/ZqG87GDW4kb0Kkf4g="
-  project: "poker-analytics"
+  - firebase deploy --only hosting --token ${TOKEN}
