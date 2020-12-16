@@ -13,6 +13,30 @@ import chunk from "lodash/chunk";
 import * as Styled from "./GamesList.style";
 import Divider from "@material-ui/core/Divider";
 
+function PaginationLoader() {
+  return (
+    <Styled.PaginationLoader>
+      <Skeleton animation="wave" width="100%" height="42px" />
+    </Styled.PaginationLoader>
+  );
+}
+
+function LoadingList({ containerHeight }) {
+  const list = new Array(5).fill(null);
+  return list.map((_) => (
+    <React.Fragment key={Math.random()}>
+      <Styled.GameContent height={Math.round(containerHeight / 5)}>
+        <Skeleton
+          animation="wave"
+          width="100%"
+          height={Math.round(containerHeight / 5 - 20)}
+        />
+      </Styled.GameContent>
+      <Divider />
+    </React.Fragment>
+  ));
+}
+
 const GamesList = () => {
   const [games, setGames] = useState(chunk(mock, 5));
   const [page, setPage] = useState(0);
@@ -42,7 +66,7 @@ const GamesList = () => {
             <FadeIn>
               {games[page].map((game) => {
                 return (
-                  <>
+                  <React.Fragment key={game.id}>
                     <Styled.GameContent
                       height={Math.round(containerHeight / 5)}
                     >
@@ -50,18 +74,29 @@ const GamesList = () => {
                       <Profit profit={game.profit} />
                     </Styled.GameContent>
                     <Divider />
-                  </>
+                  </React.Fragment>
                 );
               })}
             </FadeIn>
           )}
+          {loading && containerHeight && (
+            <div ref={containerRef} style={{ height: "100%", width: "100%" }}>
+              <LoadingList containerHeight={containerHeight} />
+            </div>
+          )}
         </CardContent>
         <CardActions>
-          <Pagination
-            count={games.length - 1}
-            color="primary"
-            onChange={(e, page) => setPage(page)}
-          />
+          {!loading ? (
+            <FadeIn>
+              <Pagination
+                count={games.length - 1}
+                color="primary"
+                onChange={(e, page) => setPage(page)}
+              />
+            </FadeIn>
+          ) : (
+            <PaginationLoader />
+          )}
         </CardActions>
       </Card>
     </Styled.GameList>
@@ -69,17 +104,3 @@ const GamesList = () => {
 };
 
 export default GamesList;
-
-// {loading && containerHeight && (
-//   <div ref={containerRef} style={{ height: "100%", width: "100%" }}>
-//     {new Array(Math.round(containerHeight / 41))
-//       .fill(null)
-//       .map((_) => (
-//         <ListItem divider>
-//           <Styled.GameContent>
-//             <Skeleton animation="wave" width="100%" height={41} />
-//           </Styled.GameContent>
-//         </ListItem>
-//       ))}
-//   </div>
-// )}
