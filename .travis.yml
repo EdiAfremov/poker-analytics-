@@ -1,11 +1,21 @@
 language: node_js
 node_js:
-  - node
+- node
 warnings_are_errors: false
 before_script:
-  - npm install firebase-tools -g
+- npm install firebase-tools -g
 install:
-  - npm install
+- npm install
+env:
+  matrix:
+  - REACT_APP_API_KEY=KCuTFu2qemXVR2JYj7dCimxNjuIgXX+ePPsH9diIL1U4FunDZfqN37eC6dwDr4bpneR9X24AW+yrv7sLddC6EQu2ALCyRn/NK0efFqQIpDvjgJkDrGI4oIWGLHC6k0Ol8rnxMDpnvOsrgQtmLE95NcnuB/Y6VZZccpsQUxLlQ+oAOrjq2d826xToBjX7MzTm1iSNACFXj/p9dmO19LFSZqNQSX50Zt68uFLiAoZ0z3vEyxjI8T0nxEQOfnnNMipcz9d3ZtNZ7Q+rrCrV71+rvumamcvw2EiJ8l9v9vyh/r07R4kWYsPcR7y9a1rAz0ta6k613pTADaZrgoro5+xYC4zHft5RDRa7MzIPDEDSsp1FSF0hBIsfaC7tAPdsd2gg6DDfvdrqUMH5O4xLW09T+q8YceD9pcqXyf7wYEK/4lXElmL4v5hHO15pnrvKU9nuOppeEN00aJ8R0Ink3MQoo4PITAanaTil0Ebt1DgfvarbaL9LERG6qPCl+x3xPynnhMRtdfKt5HUWBl7hpCziqgRrFlcluP7eDKyWJjHFKIi/7I6Fy2/1VYOChQWRs7I6juLcNh9L01rE9hPsJi5nQKDM7dJhvPwPsbeuCnLJc77CyHNdIgFepiiJ8ruzWlkLsB6is3rLlDVP1gmdE/IimS7W2Bltr1J7keDkF90gXUo=
+  - REACT_APP_AUTH_DOMAIN=t0dSzMYsOJuPfiNu4M4QlCMkn5jmlSUBmGoD+F0QJ+IYFuC32rMdJr5TPDAC9Hmaq2mwV7kpvHkRcdRknz+oV7TlWLt+GiLO3/tbzsIwJiAPHeLpGOA/i9Sz95EhknAThql1vag70bCxVlWT1J/7aYM7SBdgsEtfKagb9Sz6NiuhTIV2oH6/wKHMCWvg+CwZRTpTgHdF8fOqg/fNzoYDysm7giitIoFONl7Be+IhdepqfcIfyx1dqISnFoQGbXyoG4zWN7vdW5LRYBdK7hhMKE06tghbcRVmPoJLNmQNLTAY8igVmVEMfe7ZaIKaRljsPLVXLihmGiGAi7y7KrLAdtGvuMG2KrQ5tbSMt9FffE6FBIknVodWCoDQyujQ4Tg5b0IYHHsbfkW1U3QIVKHz/vp44jzxYHudl+ciRw8MaotnUrSv+12K/uKuwFKWRpMz9a+8L0YjkUusMhIUFao/7IT7/+vCY3Op8vdOUm6X9JtC4VxBST4AMqgaQWiF8UVu2sJq6QQf1lOp5oCRKVOc7tpSqj52kzx7n7T83Pa/Ui4gP+4ubBftceSSx4EjFGP/T2cAXhJAugaAP+V3egxi6p8ksLl4FvRv2YupkGOMQEewERWtUtlCFd/Fug7E2Te/6RyK/FDBpH6n0c+LmAgOhu05rX4bwlHQHoiVCzjaC+Q=
+  - REACT_APP_DATABASE_URL="https://poker-analytics-3ba9f.firebaseio.com"
+  - REACT_APP_PROJECT_ID="poker-analytics-3ba9f"
+  - REACT_APP_STORAGE_BUCKET="poker-analytics-3ba9f.appspot.com"
+  - REACT_APP_MESSAGING_SENDER_ID="564797752566"
+  - REACT_APP_APP_ID="1:564797752566:web:f413cce40d5176a06798d7"
+  - REACT_APP_MEASUREMENT_ID="G-1KDKBNQV74"
 script:
-  - CI=false npm run build
-  - firebase deploy --only hosting --token $TOKEN
+- CI=false npm run build
+- firebase deploy --only hosting --token $TOKEN

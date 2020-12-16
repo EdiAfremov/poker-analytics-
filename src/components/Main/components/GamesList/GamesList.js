@@ -35,7 +35,7 @@ const GamesList = () => {
 
   return (
     <Styled.GameList>
-      <Card>
+      <Card elevation={0} variant="outlined">
         <CardHeader title="Games Played" />
         <CardContent ref={containerRef}>
           {!loading && (

@@ -1,62 +1,51 @@
-import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import React, { useContext, useEffect, useCallback } from "react";
 import { GlobalStyle } from "./styles";
 import BottomNavigation from "./components/Navigation/BottomNavigation";
-import styled from "styled-components";
-import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import Typography from "@material-ui/core/Typography";
 import Main from "./components/Main/Main";
-import GamesContextProvider from "./context/GamesContext";
-
-const Container = styled.div`
-  box-sizing: border-box;
-  height: 100%;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  background: #fafafa;
-  header,
-  .MuiPaper-elevation1,
-  .MuiPaper-elevation4 {
-    box-shadow: rgba(0, 0, 0, 0.117647) 0 1px 3px !important;
-  }
-`;
-const Content = styled.div`
-  box-sizing: border-box;
-  overflow-y: hidden;
-  padding: 10px 10px 20px 10px;
-`;
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      contrastText: "#fff",
-      main: "#00cf8d",
-    },
-  },
-});
+import DrawerContextProvider from "./context/DrawerContext";
+import { FireBaseContext } from "./context/FireBaseContext";
+import UserInfoContextProvider from "./context/UserInfoContext";
+import { Switch, Route } from "react-router-dom";
+import * as paths from "./routes/paths";
+import * as Styled from "./App.style";
+import LoginForm from "./components/Login/LoginForm";
+import AppToolbar from "./components/Layout/Toolbar/Toolbar";
+import { MuiTheme } from "./styles/theme";
+import { useHistory } from "react-router-dom";
 
 function App() {
+  const { auth } = useContext(FireBaseContext);
+  const history = useHistory();
+
+  auth().onAuthStateChanged(function (user) {
+    if (!user) {
+      history.push(paths.LOGIN);
+    }
+  });
+
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <Container>
-        <AppBar position="static" color="transparent">
-          <Toolbar>
-            <Typography variant="h6" color="primary">
-              Analytics
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <GamesContextProvider>
-          <Content>
-            <Main />
-          </Content>
-          <BottomNavigation />
-        </GamesContextProvider>
-      </Container>
-    </ThemeProvider>
+    <UserInfoContextProvider>
+      <ThemeProvider theme={MuiTheme}>
+        <GlobalStyle />
+        <Switch>
+          <Route exact path={paths.LOGIN}>
+            <LoginForm />
+          </Route>
+          <Route path={paths.HOME}>
+            <Styled.Container>
+              <AppToolbar />
+              <DrawerContextProvider>
+                <Styled.Content>
+                  <Main />
+                </Styled.Content>
+                <BottomNavigation />
+              </DrawerContextProvider>
+            </Styled.Container>
+          </Route>
+        </Switch>
+      </ThemeProvider>
+    </UserInfoContextProvider>
   );
 }
 

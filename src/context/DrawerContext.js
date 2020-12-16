@@ -1,27 +1,27 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-export const GamesContext = React.createContext();
+export const DrawerContext = React.createContext();
 
-const GamesContextProvider = ({ children }) => {
+const DrawerContextProvider = ({ children }) => {
   const [isDrawerOpen, toggleDrawer] = useState(false);
 
   return (
-    <GamesContext.Provider value={{ toggleDrawer, isDrawerOpen }}>
+    <DrawerContext.Provider value={{ toggleDrawer, isDrawerOpen }}>
       {children}
-    </GamesContext.Provider>
+    </DrawerContext.Provider>
   );
 };
 
-GamesContextProvider.deafultProps = {
+DrawerContextProvider.deafultProps = {
   children: () => <div />,
 };
 
-GamesContextProvider.propTypes = {
+DrawerContextProvider.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
 };
 
-export default GamesContextProvider;
+export default DrawerContextProvider;

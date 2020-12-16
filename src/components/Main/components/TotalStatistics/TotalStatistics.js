@@ -13,7 +13,7 @@ const total = mock.reduce((a, c) => a + c.profit, 0);
 const TotalStatistics = () => {
   return (
     <Styled.TotalStatistics>
-      <Card>
+      <Card elevation={0} variant="outlined">
         <CardHeader title="Statistics"></CardHeader>
         <CardContent>
           <FadeIn>

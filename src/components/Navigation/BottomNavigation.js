@@ -7,7 +7,7 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import styled from "styled-components";
-import { GamesContext } from "../../context/GamesContext";
+import { DrawerContext } from "../../context/DrawerContext";
 
 const StyledBottomNavigation = styled.div`
   .MuiBottomNavigation-root {
@@ -22,7 +22,7 @@ const StyledBottomNavigation = styled.div`
 `;
 
 const BottomNavigation = () => {
-  const { toggleDrawer } = React.useContext(GamesContext);
+  const { toggleDrawer } = React.useContext(DrawerContext);
   return (
     <StyledBottomNavigation>
       <BottomNavigationMui

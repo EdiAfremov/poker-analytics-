@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import moment from "moment";
-import { GamesContext } from "../../../../context/GamesContext";
+import { DrawerContext } from "../../../../context/DrawerContext";
 import Drawer from "@material-ui/core/Drawer";
 import MomentUtils from "@date-io/moment";
 import InputNumber from "rc-input-number";
@@ -12,7 +12,7 @@ import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import * as Styled from "./NewGameForm.style";
 
 export const NewGameForm = () => {
-  const { isDrawerOpen, toggleDrawer } = useContext(GamesContext);
+  const { isDrawerOpen, toggleDrawer } = useContext(DrawerContext);
   const [date, setDate] = useState(moment().startOf("day"));
   const [buyIn, setBuyIn] = useState(50);
   const [cashOut, setCashOut] = useState(0);
