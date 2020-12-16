@@ -1,22 +1,20 @@
 language: node_js
 node_js:
-- node
+  - node
 warnings_are_errors: false
 before_script:
-- npm install firebase-tools -g
+  - npm install firebase-tools -g
 install:
-- npm install
+  - npm install
 env:
-  matrix:
-  - REACT_APP_AUTH_DOMAIN="poker-analytics-3ba9f.firebaseapp.com"
-  - REACT_APP_DATABASE_URL="https://poker-analytics-3ba9f.firebaseio.com"
-  - REACT_APP_PROJECT_ID="poker-analytics-3ba9f"
-  - REACT_APP_STORAGE_BUCKET="poker-analytics-3ba9f.appspot.com"
-  - REACT_APP_MESSAGING_SENDER_ID="564797752566"
-  - REACT_APP_APP_ID="1:564797752566:web:f413cce40d5176a06798d7"
-  - REACT_APP_MEASUREMENT_ID="G-1KDKBNQV74"
-  global:
-    secure: b4B1ZEdX/EIeR8sJEYRHXexrkgntsIV5DtuLKmDVi4ZOnOQLOpFjfGdy3Zqf3e9+ApRv/vDiAcE45J3J9wzrl/xw8EAI4OTqPPFKYxNMmj8EP6UqL7LroyQP56MYNiaHb/z5WwR6iJKMYS5kyKIw2n1SqQqpDD3JieWidDxmXw27a/lukRZC1ev78DHPjWPnbzSMiwow2reSfxxyaGslV4QNmBDLWWMO/JASb5RPR026wqhkplUfMIQ1Mzo0gGzGQehQG90NVjt+TJG+TtfYZEPHIOSzL5L3kSVth42C1OQRjyh53jtl7NCuWePylWsmma2GSQHwPIZumbacxCsX3QpuWdc6GkCn8t+rAyuLJ5vXh6EimE79wFbtv1lzIwFbopRPRsCkBM09IIv26JSqXLFbVg7Zs+yFquCK+PL5PJdqsWuBjxv+EdKkviGt3EpDnIltMGriHFwA3y5lqXya6TQPsoKw9MnrUWCGU7vxxDvrvLEsjWNf6WQB5L3NifXtzkxzplbJcnaoiXedmAL+HRbtATOmNUDz/L1X3j5aV5iriUG60abj6eGdGqmpzGp0OfQXfTMQWhQPvlQ1nTDacPcNzlqDZGyqPPzwr4oMCDCZsBPY5jkG+dvpiYu1xm7pJiZzx1wmd5+JKqXSUsnyxXaE+eK0DX0s50m2ytcWJv8=
+  - REACT_APP_API_KEY=$API_KEY
+  - REACT_APP_AUTH_DOMAIN=$AUTH_DOMAIN
+  - REACT_APP_DATABASE_URL=$DATABASE_URL
+  - REACT_APP_PROJECT_ID=$PROJECT_ID
+  - REACT_APP_STORAGE_BUCKET=$STORAGE_BUCKET
+  - REACT_APP_MESSAGING_SENDER_ID=$MESSAGING_SENDER_ID
+  - REACT_APP_APP_ID=$APP_ID
+  - REACT_APP_MEASUREMENT_ID=$MEASUREMENT_ID
 script:
-- CI=false npm run build
-- firebase deploy --only hosting --token $TOKEN
+  - CI=false npm run build
+  - firebase deploy --only hosting --token $TOKEN
