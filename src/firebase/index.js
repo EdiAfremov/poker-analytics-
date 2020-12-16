@@ -1,9 +1,4 @@
 import app from "firebase/app";
-import "firebase/auth";
-
-export const { auth } = app;
-
-console.log(process.env.REACT_APP_API_KEY);
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -16,39 +11,4 @@ const config = {
   measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
-const providers = {
-  google: "GoogleAuthProvider",
-  facebook: "FacebookAuthProvider",
-};
-
-export const initialize = () => app.initializeApp(config);
-
-export const signIn = async (provider = "google") => {
-  try {
-    const result = await auth().signInWithPopup(
-      new auth[providers[provider]]()
-    );
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const token = result?.credential?.accessToken;
-    // The signed-in user info.
-    const user = result?.user;
-    const additionalUserInfo = result?.additionalUserInfo;
-    
-    return { ...user, ...additionalUserInfo };
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
-export const signOut = async () => {
-  try {
-    const signOut = await auth.signOut();
-    return signOut;
-  } catch (error) {
-    return error;
-  }
-};
-
-export const getLoggedInUser = () => {
-  return auth().currentUser;
-};
+app.initializeApp(config);

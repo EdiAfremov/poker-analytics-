@@ -1,28 +1,35 @@
-import React, { useContext } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect } from "react";
 import Box from "@material-ui/core/Box";
 import * as Styled from "./LoginForm.style";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import * as paths from "./../../routes/paths";
 import { FireBaseContext } from "../../context/FireBaseContext";
 import { UserInfoContext } from "../../context/UserInfoContext";
 
 export default function LoginForm() {
   const { signIn } = useContext(FireBaseContext);
-  const { setUserInfo } = useContext(UserInfoContext);
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+  const { isAuthenticated } = userInfo;
   const history = useHistory();
 
   const signInHandler = async (provider) => {
     try {
       const { profile = {} } = await signIn(provider);
-      setUserInfo({ ...profile });
-      return history.push(paths.HOME);
+      setUserInfo({ ...profile, authenticated: true });
+      history.push(paths.HOME);
+      return;
     } catch (error) {
       return error;
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to={paths.HOME} />;
+  }
 
   return (
     <Styled.FormContainer>
