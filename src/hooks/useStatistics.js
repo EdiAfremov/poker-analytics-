@@ -9,7 +9,7 @@ const useStatistics = () => {
   const [loading, setLoading] = useState(true);
 
   function onChangeHadnler(data) {
-    const total = data.reduce((a, c) => a + c.profit, 0);
+    const total = data.reduce((a, c) => a += c.profit, 0);
 
     setTotal(total);
     setLoading(false);
