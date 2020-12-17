@@ -19,7 +19,11 @@ export const signIn = async (provider = "google") => {
     // The signed-in user info.
     const user = result?.user;
     const additionalUserInfo = result?.additionalUserInfo;
-    // saveUser();
+
+    if (additionalUserInfo.isNewUser) {
+      DB.createNewUser({ ...user, ...additionalUserInfo });
+    }
+    
     return { ...user, ...additionalUserInfo };
   } catch (error) {
     throw new Error(error);

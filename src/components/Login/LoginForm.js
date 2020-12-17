@@ -18,8 +18,8 @@ export default function LoginForm() {
 
   const signInHandler = async (provider) => {
     try {
-      const { profile = {} } = await signIn(provider);
-      setUserInfo({ ...profile, authenticated: true });
+      const { profile = {}, uid } = await signIn(provider);
+      await setUserInfo({ ...profile, uid, authenticated: true });
       history.push(paths.HOME);
       return;
     } catch (error) {
