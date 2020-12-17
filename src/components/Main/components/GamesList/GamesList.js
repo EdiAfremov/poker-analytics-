@@ -63,7 +63,7 @@ const GamesList = () => {
               {gamesData.length
                 ? gamesData[page].map((game) => {
                     return (
-                      <React.Fragment key={game.id}>
+                      <React.Fragment key={game.gameId}>
                         <Styled.GameContent
                           height={Math.round(containerHeight / 5)}
                         >
