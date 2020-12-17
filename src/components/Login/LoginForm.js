@@ -8,18 +8,18 @@ import Divider from "@material-ui/core/Divider";
 import { useHistory, Redirect } from "react-router-dom";
 import * as paths from "./../../routes/paths";
 import { FireBaseContext } from "../../context/FireBaseContext";
-import { UserInfoContext } from "../../context/UserInfoContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function LoginForm() {
   const { signIn } = useContext(FireBaseContext);
-  const { userInfo, setUserInfo } = useContext(UserInfoContext);
-  const { isAuthenticated } = userInfo;
+  const { isAuthenticated } = useContext(AuthContext);
+
   const history = useHistory();
 
   const signInHandler = async (provider) => {
     try {
       const { profile = {}, uid } = await signIn(provider);
-      await setUserInfo({ ...profile, uid, authenticated: true });
+      // await setUserInfo({ ...profile, uid, authenticated: true });
       history.push(paths.HOME);
       return;
     } catch (error) {

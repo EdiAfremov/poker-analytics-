@@ -1,21 +1,45 @@
 import React, { useContext, useState } from "react";
 import moment from "moment";
-import { DrawerContext } from "../../../../context/DrawerContext";
 import Drawer from "@material-ui/core/Drawer";
 import MomentUtils from "@date-io/moment";
-import InputNumber from "rc-input-number";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import "rc-input-number/assets/index.css";
 import Button from "@material-ui/core/Button";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import { DrawerContext } from "../../../../context/DrawerContext";
+import { FireBaseContext } from "../../../../context/FireBaseContext";
+import { AuthContext } from "../../../../context/AuthContext";
+
 import * as Styled from "./NewGameForm.style";
 
 export const NewGameForm = () => {
   const { isDrawerOpen, toggleDrawer } = useContext(DrawerContext);
+  const { userId } = useContext(AuthContext);
+  const { createNewGame } = useContext(FireBaseContext);
+
   const [date, setDate] = useState(moment().startOf("day"));
-  const [buyIn, setBuyIn] = useState(50);
-  const [cashOut, setCashOut] = useState(0);
+  const [buyIn, setBuyIn] = useState("50");
+  const [cashedOut, setCashedOut] = useState("0");
+
+  function onAddGameHandler() {
+    if (!cashedOut || !date || !buyIn) return;
+    const profit = cashedOut - buyIn;
+
+    createNewGame({
+      buyIn,
+      cashedOut: cashedOut,
+      date: moment(date).valueOf(),
+      userId,
+      profit,
+    });
+    toggleDrawer(false);
+    setDate(moment().startOf("day"));
+    setBuyIn("50");
+    setCashedOut("0");
+    return;
+  }
+
   return (
     <Drawer
       anchor="bottom"
@@ -27,7 +51,9 @@ export const NewGameForm = () => {
           <Box mb={3}>
             <DatePicker
               fullWidth
+              required
               autoOk
+              error={!date}
               disableToolbar
               disableFuture
               variant="inline"
@@ -47,10 +73,12 @@ export const NewGameForm = () => {
             <TextField
               label="Buy-in"
               fullWidth
+              error={!buyIn}
               value={buyIn}
               onChange={(e) => setBuyIn(e.target.value)}
               name="buyIn"
               type="number"
+              required
               InputLabelProps={{ shrink: true }}
               variant="outlined"
               inputProps={{ inputmode: "numeric", pattern: "[0-9]*" }}
@@ -58,11 +86,13 @@ export const NewGameForm = () => {
           </Box>
           <Box mb={3}>
             <TextField
+              error={!cashedOut}
+              required
               label="Cashed out"
               fullWidth
               type="number"
-              value={cashOut}
-              onChange={(e) => setCashOut(e.target.value)}
+              value={cashedOut}
+              onChange={(e) => setCashedOut(e.target.value)}
               name="cashedOut"
               InputLabelProps={{ shrink: true }}
               variant="outlined"
@@ -76,6 +106,7 @@ export const NewGameForm = () => {
               size="large"
               disableElevation
               fullWidth
+              onClick={() => onAddGameHandler()}
             >
               ADD
             </Button>

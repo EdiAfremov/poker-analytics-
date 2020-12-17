@@ -1,35 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
-import { FireBaseContext } from "./FireBaseContext";
+import React from "react";
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
-import * as paths from "../routes/paths";
+import useUserInfo from "../hooks/useUserInfo";
 
 export const UserInfoContext = React.createContext();
 
 const UserInfoContextProvider = ({ children }) => {
-  const { auth } = useContext(FireBaseContext);
-  const [userInfo, setUserInfo] = useState({});
-  const history = useHistory();
-
-  auth().onAuthStateChanged(function (user) {
-    if (!user) {
-      history.push(paths.LOGIN);
-    } else {
-      if (userInfo.isAuthenticated) return;
-
-      const { uid, displayName, email, providerData } = user;
-      setUserInfo({
-        uid,
-        displayName,
-        email,
-        providerData,
-        isAuthenticated: true,
-      });
-    }
-  });
+  const user = useUserInfo();
 
   return (
-    <UserInfoContext.Provider value={{ userInfo, setUserInfo }}>
+    <UserInfoContext.Provider value={{ ...user }}>
       {children}
     </UserInfoContext.Provider>
   );

@@ -5,16 +5,17 @@ import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import FireBaseContextProvider from "./context/FireBaseContext";
-import UserInfoContextProvider from "./context/UserInfoContext";
+import AuthContextProvider from "./context/AuthContext";
+// import * as Firebase from "./firebase";
 import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <FireBaseContextProvider>
-        <UserInfoContextProvider>
+        <AuthContextProvider>
           <App />
-        </UserInfoContextProvider>
+        </AuthContextProvider>
       </FireBaseContextProvider>
     </Router>
   </React.StrictMode>,

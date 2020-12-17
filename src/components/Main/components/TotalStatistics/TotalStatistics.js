@@ -7,10 +7,12 @@ import Typography from "@material-ui/core/Typography";
 import Profit from "../Shared/Profit";
 import mock from "../../../../mock";
 import * as Styled from "./TotalStatistics.style";
+import useStatistics from "../../../../hooks/useStatistics";
 
-const total = mock.reduce((a, c) => a + c.profit, 0);
+// const total = mock.reduce((a, c) => a + c.profit, 0);
 
 const TotalStatistics = () => {
+  const {total} = useStatistics()
   return (
     <Styled.TotalStatistics>
       <Card elevation={0} variant="outlined">

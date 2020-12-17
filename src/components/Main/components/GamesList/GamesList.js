@@ -12,6 +12,8 @@ import Pagination from "@material-ui/lab/Pagination";
 import chunk from "lodash/chunk";
 import * as Styled from "./GamesList.style";
 import Divider from "@material-ui/core/Divider";
+import useGamesData from "../../../../hooks/useGamesData";
+import moment from "moment";
 
 function PaginationLoader() {
   return (
@@ -38,10 +40,9 @@ function LoadingList({ containerHeight }) {
 }
 
 const GamesList = () => {
-  const [games, setGames] = useState(chunk(mock, 5));
+  // const [games, setGames] = useState(chunk(mock, 5));
+  const { loading, gamesData } = useGamesData();
   const [page, setPage] = useState(0);
-
-  const [loading, setLoading] = useState(true);
   const [containerHeight, setContainerHeight] = useState(null);
   const containerRef = useRef(null);
 
@@ -51,12 +52,6 @@ const GamesList = () => {
     }
   }, [containerRef]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-  }, []);
-
   return (
     <Styled.GameList>
       <Card elevation={0} variant="outlined">
@@ -64,19 +59,22 @@ const GamesList = () => {
         <CardContent ref={containerRef}>
           {!loading && (
             <FadeIn>
-              {games[page].map((game) => {
-                return (
-                  <React.Fragment key={game.id}>
-                    <Styled.GameContent
-                      height={Math.round(containerHeight / 5)}
-                    >
-                      {game.date}
-                      <Profit profit={game.profit} />
-                    </Styled.GameContent>
-                    <Divider />
-                  </React.Fragment>
-                );
-              })}
+              {!gamesData.length && <div>No Games Found</div>}
+              {gamesData.length
+                ? gamesData[page].map((game) => {
+                    return (
+                      <React.Fragment key={game.id}>
+                        <Styled.GameContent
+                          height={Math.round(containerHeight / 5)}
+                        >
+                          {moment(game.date).format("DD.MM.YY")}
+                          <Profit profit={game.profit} />
+                        </Styled.GameContent>
+                        <Divider />
+                      </React.Fragment>
+                    );
+                  })
+                : null}
             </FadeIn>
           )}
           {loading && containerHeight && (
@@ -86,16 +84,16 @@ const GamesList = () => {
           )}
         </CardContent>
         <CardActions>
-          {!loading ? (
+          {!loading && gamesData.length && gamesData.length > 1 ? (
             <FadeIn>
               <Pagination
-                count={games.length - 1}
+                count={gamesData.length}
                 color="primary"
-                onChange={(e, page) => setPage(page)}
+                onChange={(e, page) => setPage(page - 1)}
               />
             </FadeIn>
           ) : (
-            <PaginationLoader />
+            loading && <PaginationLoader />
           )}
         </CardActions>
       </Card>

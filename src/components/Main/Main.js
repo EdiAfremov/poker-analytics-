@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import GamesList from "./components/GamesList/GamesList";
 import TotalStatistics from "./components/TotalStatistics/TotalStatistics";
 import styled from "styled-components";
 import { NewGameForm } from "./components/NewGameForm/NewGameForm";
+import { Redirect } from "react-router-dom";
+import * as paths from "../../routes/paths";
+import { AuthContext } from "../../context/AuthContext";
+import UserInfoContextProvider from "../../context/UserInfoContext";
 
 const GridContainer = styled.div`
   width: 100%;
@@ -13,6 +17,12 @@ const GridContainer = styled.div`
 `;
 
 const Main = () => {
+  const { isAuthenticated } = useContext(AuthContext);
+
+  if (!isAuthenticated) {
+    return <Redirect to={paths.LOGIN} />;
+  }
+
   return (
     <GridContainer>
       <TotalStatistics />

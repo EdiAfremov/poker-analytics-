@@ -23,7 +23,7 @@ export const signIn = async (provider = "google") => {
     if (additionalUserInfo.isNewUser) {
       DB.createNewUser({ ...user, ...additionalUserInfo });
     }
-    
+
     return { ...user, ...additionalUserInfo };
   } catch (error) {
     throw new Error(error);
@@ -40,5 +40,6 @@ export const signOut = async () => {
 };
 
 export const getLoggedInUser = () => {
-  return auth().currentUser;
+  const { currentUser } = auth();
+  return currentUser;
 };

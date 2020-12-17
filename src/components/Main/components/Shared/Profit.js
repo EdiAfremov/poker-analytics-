@@ -5,6 +5,9 @@ import styled from "styled-components";
 import NumberFormat from "react-number-format";
 
 function getProfitStyle(profit) {
+  if(profit === 0){
+    return "#00000042"
+  }
   return profit > 0 ? "#4bc87d" : "#eb0f29";
 }
 
