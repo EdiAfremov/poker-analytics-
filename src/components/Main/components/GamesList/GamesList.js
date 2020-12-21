@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
-import mock from "../../../../mock";
+// import mock from "../../../../mock";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -7,13 +7,13 @@ import CardActions from "@material-ui/core/CardActions";
 import FadeIn from "react-fade-in";
 import Typography from "@material-ui/core/Typography";
 import Skeleton from "@material-ui/lab/Skeleton";
-import Profit from "../Shared/Profit";
 import Pagination from "@material-ui/lab/Pagination";
-import chunk from "lodash/chunk";
 import * as Styled from "./GamesList.style";
 import Divider from "@material-ui/core/Divider";
 import useGamesData from "../../../../hooks/useGamesData";
-import moment from "moment";
+import LoadingHOC from "../Shared/LoadingHOC";
+
+import Game from "./components/Game/Game";
 
 function PaginationLoader() {
   return (
@@ -40,7 +40,6 @@ function LoadingList({ containerHeight }) {
 }
 
 const GamesList = () => {
-  // const [games, setGames] = useState(chunk(mock, 5));
   const { loading, gamesData } = useGamesData();
   const [page, setPage] = useState(0);
   const [containerHeight, setContainerHeight] = useState(null);
@@ -55,30 +54,38 @@ const GamesList = () => {
   return (
     <Styled.GameList>
       <Card elevation={0} variant="outlined">
-        <CardHeader title="Games Played" />
+        <CardHeader
+          title={
+            <LoadingHOC width="100px" height={21} loading={loading}>
+              <Typography variant="subtitle2" gutterBottom>
+                List
+              </Typography>
+            </LoadingHOC>
+          }
+        />
         <CardContent ref={containerRef}>
           {!loading && (
-            <FadeIn>
-              {!gamesData.length && <div>No Games Found</div>}
-              {gamesData.length
-                ? gamesData[page].map((game) => {
-                    return (
-                      <React.Fragment key={game.gameId}>
-                        <Styled.GameContent
-                          height={Math.round(containerHeight / 5)}
-                        >
-                          {moment(game.date).format("DD.MM.YY")}
-                          <Profit profit={game.profit} />
-                        </Styled.GameContent>
-                        <Divider />
-                      </React.Fragment>
-                    );
-                  })
-                : null}
-            </FadeIn>
+            <div className="FadeInList">
+              {gamesData.length ? (
+                <FadeIn>
+                  <>
+                    {gamesData[page].map((game) => (
+                      <Game
+                        loading={loading}
+                        details={game}
+                        key={game.gameId}
+                        height={Math.round(containerHeight / 5)}
+                      />
+                    ))}
+                  </>
+                </FadeIn>
+              ) : (
+                <Styled.NoDataMarkup />
+              )}
+            </div>
           )}
           {loading && containerHeight && (
-            <div ref={containerRef} style={{ height: "100%", width: "100%" }}>
+            <div style={{ height: "100%", width: "100%" }}>
               <LoadingList containerHeight={containerHeight} />
             </div>
           )}

@@ -1,12 +1,16 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useMemo } from "react";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import styled from "styled-components";
-import NumberFormat from "react-number-format";
+import FormattedNumber from "./FormattedNumber";
 
 function getProfitStyle(profit) {
-  if(profit === 0){
-    return "#00000042"
+  if (isNaN(profit)) {
+    return "inherit";
+  }
+  if (profit === 0) {
+    return "#00000042";
   }
   return profit > 0 ? "#4bc87d" : "#eb0f29";
 }
@@ -22,18 +26,16 @@ const GameProfit = styled.div`
 
 const getArrow = (p) => (p > 0 ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />);
 
-const Profit = ({ profit = "0" }) => {
+const Profit = ({ profit = 0 }) => {
   const icon = getArrow(profit);
-  return (
-    <GameProfit profit={profit}>
-      {profit !== 0 && icon}
-      <NumberFormat
-        value={profit.toString().replace("-", "")}
-        displayType="text"
-        thousandSeparator
-        suffix="₪"
-      />
-    </GameProfit>
+  return useMemo(
+    () => (
+      <GameProfit profit={profit} className="GameProfit">
+        {(profit && profit !== 0 && icon) || null}
+        <FormattedNumber number={profit} />
+      </GameProfit>
+    ),
+    [profit]
   );
 };
 
